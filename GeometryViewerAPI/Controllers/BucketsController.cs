@@ -17,9 +17,9 @@ namespace GeometryViewerAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<int>>> GetAllBuckets()
+        public async Task<ActionResult<List<NamedEntity>>> GetAllBuckets()
         {
-            return Ok(await _dbcontext.Buckets.Select(b => b.Id).ToListAsync());
+            return Ok(await _dbcontext.Buckets.Select(bucket => (NamedEntity)bucket).ToListAsync());
         }
 
         [HttpGet("GetLastBucket")]
@@ -41,14 +41,6 @@ namespace GeometryViewerAPI.Controllers
         {
             int? id = await _dbcontext.Buckets.OrderByDescending(b => b.Name).Select(b => (int?)b.Id).FirstOrDefaultAsync();
             return Ok(id);
-            //if (bucket is null)
-            //{
-            //    return BadRequest("Bucket with this id not found");
-            //}
-            //else
-            //{
-            //    return Ok(bucket);
-            //}
         }
 
         [HttpDelete]
