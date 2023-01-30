@@ -17,9 +17,9 @@ namespace GeometryViewerAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Bucket>>> GetAllBuckets()
+        public async Task<ActionResult<List<int>>> GetAllBuckets()
         {
-            return Ok(await _dbcontext.Buckets.ToListAsync());
+            return Ok(await _dbcontext.Buckets.Select(b => b.Id).ToListAsync());
         }
 
         [HttpGet("GetLastBucket")]
@@ -61,7 +61,7 @@ namespace GeometryViewerAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> AddBucket(Bucket bucket)
         {
-            _dbcontext.Buckets.Add(bucket);         
+            _dbcontext.Buckets.Add(bucket);
             return Ok(await _dbcontext.SaveChangesAsync());
         }
 

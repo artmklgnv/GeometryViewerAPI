@@ -31,7 +31,7 @@ builder.Services.Configure<FormOptions>(options =>
 
 builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
 {
-    build.WithOrigins("http://127.0.0.1:5173", "http://localhost:5173", "https://artmklgnv.github.io", "http://89.22.229.186").AllowAnyMethod().AllowAnyHeader();
+    build.WithOrigins("http://127.0.0.1:5173", "http://localhost:5173", "https://artmklgnv.github.io", "http://89.22.229.186", "https://geometryviewer.artmklgnv.repl.co", "https://geometryviewer-1.artmklgnv.repl.co").AllowAnyMethod().AllowAnyHeader();
 }));
 
 var app = builder.Build();
@@ -40,7 +40,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty;
+    });
 }
 
 app.UseCors("corspolicy");
